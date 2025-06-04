@@ -5,6 +5,7 @@ import { ProductRepository } from './repositories/product.repository';
 import { ProductMongooseRepository } from './repositories/mongoose/product.mongoose.repository';
 import { ProductService } from './services/product.service';
 import { ProductController } from './controllers/product.controller';
+import { ProductGateway } from './gateways/product.gateway';
 
 @Module({
     imports: [
@@ -19,6 +20,7 @@ import { ProductController } from './controllers/product.controller';
             useClass: ProductMongooseRepository,
         },
         ProductService,
+        ProductGateway,
     ],
     controllers: [
         ProductController,

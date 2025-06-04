@@ -1,38 +1,53 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
-import { ProductRepository } from "../repositories/product.repository";
-import { IProduct } from "../schemas/models/product.interface";
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { ProductRepository } from '../repositories/product.repository';
+import { IProduct } from '../schemas/models/product.interface';
+import { Cache } from 'cache-manager';
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
+import { ProductGateway } from '../gateways/product.gateway';
+
 
 @Injectable()
 export class ProductService {
-    constructor(private readonly postRepository: ProductRepository) { 
-    }
+  constructor(
+    private readonly productRepository: ProductRepository,
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
+    private readonly productGateway: ProductGateway,
+  ) {}
 
-    async getAllPost(limit: number, page: number) {
-        return this.postRepository.getAllPost(limit, page);
-    }
+  async getAllProduct(limit: number, page: number) {
+    const cacheKey = `products:limit:${limit}:page:${page}`;
+    const cached = await this.cacheManager.get(cacheKey);
 
-    async getPostById(postId: string) {
-        const product = await this.postRepository.getPostById(postId);
-        if(!product) throw new NotFoundException('Post not found');
-        return product;
-    }
+    if (cached) return cached;
 
-    async createPost(product) {
-        return this.postRepository.createPost(product);
-    }
+    const products = await this.productRepository.getAllProduct(limit, page);
+    await this.cacheManager.set(cacheKey, products, 60); // cache 60s
+    return products;
+  }
 
-    async updatePost(postId: string, product: IProduct) {
-        const updatedPost = await this.postRepository.updatePost(postId, product);
-        if (!updatedPost) throw new NotFoundException('Post not found');
-        return updatedPost;
-    }
-    
-    async deletePost(postId: string) {
-        return this.postRepository.deletePost(postId);
-    }
+  async getProductById(productId: string) {
+    const product = await this.productRepository.getProductById(productId);
+    if (!product) throw new NotFoundException('Product not found');
+    return product;
+  }
 
-    async searchPosts(keyword: string) {
-        return this.postRepository.searchPosts(keyword);
-    }
-    
+  async createProduct(product: IProduct) {
+    const created = await this.productRepository.createProduct(product);
+    this.productGateway.emitNewProduct(created);
+    return created;
+  }
+
+  async updateProduct(productId: string, product: IProduct) {
+    const updated = await this.productRepository.updateProduct(productId, product);
+    if (!updated) throw new NotFoundException('Product not found');
+    return updated;
+  }
+
+  async deleteProduct(productId: string) {
+    return this.productRepository.deleteProduct(productId);
+  }
+
+  async searchProducts(keyword: string) {
+    return this.productRepository.searchProducts(keyword);
+  }
 }

@@ -1,13 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class PostDto {
-  @ApiProperty({ example: 'Meu primeiro product', description: 'Título da postagem.' })
+export class ProductDto {
+  @ApiProperty({ example: 'Meu primeiro product', description: 'Título da productagem.' })
   title: string;
 
-  @ApiProperty({ example: 'Uma introdução breve sobre o conteúdo.', description: 'Uma introdução da postagem.' })
+  @ApiProperty({ example: 'Uma introdução breve sobre o conteúdo.', description: 'Uma introdução da productagem.' })
   intro: string;
 
-  @ApiProperty({ example: 'Aqui está o conteúdo detalhado do meu product.', description: 'O conteúdo completo da postagem.' })
+  @ApiProperty({ example: 'Aqui está o conteúdo detalhado do meu product.', description: 'O conteúdo completo da productagem.' })
   content: string;
 
   @ApiProperty({ example: 'https://meusite.com/imagem.png', description: 'URL de uma imagem relacionada.', required: false })

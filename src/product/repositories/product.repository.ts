@@ -1,10 +1,10 @@
 import { IProduct } from "../schemas/models/product.interface"
 
 export abstract class ProductRepository {
-    abstract getAllPost(limit: number, page: number): Promise<IProduct[]>;
-    abstract getPostById(postId: string): Promise<IProduct>;
-    abstract createPost(product: IProduct): Promise<void>;
-    abstract updatePost(postId: string, product: IProduct): Promise<IProduct>;
-    abstract deletePost(postId: string): Promise<void>;
-    abstract searchPosts(keyword: string): Promise<IProduct[]>;
+    abstract getAllProduct(limit: number, page: number): Promise<IProduct[]>;
+    abstract getProductById(productId: string): Promise<IProduct>;
+    abstract createProduct(product: IProduct): Promise<void>;
+    abstract updateProduct(productId: string, product: IProduct): Promise<IProduct>;
+    abstract deleteProduct(productId: string): Promise<void>;
+    abstract searchProducts(keyword: string): Promise<IProduct[]>;
 }

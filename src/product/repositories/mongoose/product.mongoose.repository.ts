@@ -8,15 +8,15 @@ import { ProductRepository } from "../product.repository";
 
 export class ProductMongooseRepository implements ProductRepository {
     constructor(
-        @InjectModel(Product.name) private postModel: Model<Product>,
+        @InjectModel(Product.name) private productModel: Model<Product>,
     ){}
     getAllPost(limit: number, page: number): Promise<IProduct[]> {
         const offset = (page - 1) * limit;
 
-        return this.postModel.find().skip(offset).limit(limit).exec();
+        return this.productModel.find().skip(offset).limit(limit).exec();
     }
     async getPostById(postId: string): Promise<IProduct> {
-        const product = await this.postModel.findById(postId).exec();
+        const product = await this.productModel.findById(postId).exec();
         if (!product) {
             throw new NotFoundException(`Post with id ${postId} not found`);
         }
@@ -24,12 +24,12 @@ export class ProductMongooseRepository implements ProductRepository {
     }
     
     async createPost(product: IProduct): Promise<void> {
-        const createStock = new this.postModel(product);
+        const createStock = new this.productModel(product);
 
         await createStock.save();
     }
     async updatePost(postId: string, product: IProduct): Promise<IProduct> {
-        const result = await this.postModel.findByIdAndUpdate(postId, product, { new: true }).exec();
+        const result = await this.productModel.findByIdAndUpdate(postId, product, { new: true }).exec();
         if(!result){
             throw new NotFoundException(`Post with id ${postId} not found`);
         }
@@ -37,16 +37,16 @@ export class ProductMongooseRepository implements ProductRepository {
     }
     
     async deletePost(postId: string): Promise<void> {
-        await this.postModel.deleteOne({_id: postId}).exec();
+        await this.productModel.deleteOne({_id: postId}).exec();
     }
 
     async searchPosts(keyword: string): Promise<IProduct[]> {
         const searchRegex = new RegExp(keyword, 'i'); // 'i' para case-insensitive
-        return this.postModel
+        return this.productModel
             .find({
                 $or: [
-                    { title: searchRegex },
-                    { content: searchRegex },
+                    { name: searchRegex },
+                    { category: searchRegex },
                 ],
             })
             .exec();

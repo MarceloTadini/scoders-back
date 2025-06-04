@@ -18,7 +18,10 @@ export class ProductService {
     const cacheKey = `products:limit:${limit}:page:${page}`;
     const cached = await this.cacheManager.get(cacheKey);
 
-    if (cached) return cached;
+    if (cached) {
+      console.log('🔄 Dados retornados do cache Redis');
+      return cached;
+    }
 
     const products = await this.productRepository.getAllProduct(limit, page);
     await this.cacheManager.set(cacheKey, products, 60); // cache 60s

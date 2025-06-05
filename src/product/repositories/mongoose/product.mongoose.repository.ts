@@ -23,10 +23,10 @@ export class ProductMongooseRepository implements ProductRepository {
         return product;
     }
     
-    async createProduct(product: IProduct): Promise<void> {
+    async createProduct(product: IProduct): Promise<IProduct> {
         const createStock = new this.productModel(product);
 
-        await createStock.save();
+        return await createStock.save();
     }
     async updateProduct(productId: string, product: IProduct): Promise<IProduct> {
         const result = await this.productModel.findByIdAndUpdate(productId, product, { new: true }).exec();

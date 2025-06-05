@@ -9,7 +9,7 @@ import { CacheModule } from '@nestjs/cache-manager';
 import { redisStore } from 'cache-manager-redis-yet';
 import { APP_INTERCEPTOR, APP_FILTER } from '@nestjs/core';
 import { LoggingInterceptor } from './shared/interceptors/logging.interceptor';
-import { AllExceptionsFilter } from './shared/filters/all-exceptions.filter';
+import { HttpExceptionFilter } from './shared/filters/http-exception.filter';
 
 @Module({
   imports: [
@@ -67,7 +67,7 @@ import { AllExceptionsFilter } from './shared/filters/all-exceptions.filter';
     },
     {
       provide: APP_FILTER,
-      useClass: AllExceptionsFilter,
+      useClass: HttpExceptionFilter,
     },
   ],
 })

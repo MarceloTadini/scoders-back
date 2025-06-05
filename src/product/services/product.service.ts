@@ -98,6 +98,7 @@ export class ProductService {
       await this.cacheManager.del(`product:${productId}`);
       await this.clearProductsCache();
       
+      this.productGateway.emitProductUpdate(updated);
       this.logger.log(`✅ Produto atualizado: ${productId}`);
       return updated;
     } catch (error) {

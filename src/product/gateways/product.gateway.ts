@@ -52,8 +52,7 @@ export class ProductGateway implements OnGatewayConnection, OnGatewayDisconnect 
     this.server.emit('productUpdated', {
       product,
       timestamp: new Date().toISOString(),
-      message: 'Produto atualizado!',
+      message: '📡 Produto atualizado via WebSocket:!',
     });
   }
-
 }

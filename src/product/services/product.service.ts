@@ -15,7 +15,7 @@ export class ProductService {
     private readonly productGateway: ProductGateway,
   ) {}
 
-  async getAllProduct(limit: number = 10, page: number = 1) {
+  async getAllProduct(limit: number, page: number) {
     try {
       const cacheKey = `products:limit:${limit}:page:${page}`;
       

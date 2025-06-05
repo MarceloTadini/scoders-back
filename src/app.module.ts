@@ -64,11 +64,7 @@ import { HttpExceptionFilter } from './shared/filters/http-exception.filter';
     {
       provide: APP_INTERCEPTOR,
       useClass: LoggingInterceptor,
-    },
-    {
-      provide: APP_FILTER,
-      useClass: HttpExceptionFilter,
-    },
+    }
   ],
 })
 export class AppModule {}

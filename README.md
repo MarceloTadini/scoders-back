@@ -1,4 +1,4 @@
-# 🚀 API de Produtos - Backend NestJS
+# 🚀 API de Produtos Scoders - Backend NestJS
 
 Bem-vindo à API de Produtos desenvolvida com **NestJS**!  
 Este backend oferece autenticação, gerenciamento completo de usuários e produtos, cache com Redis, e comunicação em tempo real via WebSocket.
@@ -9,7 +9,6 @@ Este backend oferece autenticação, gerenciamento completo de usuários e produ
 
 ### 🔐 Autenticação
 - Login com geração de token JWT
-- Proteção de rotas privadas (autorização obrigatória)
 
 ### 👥 Usuários
 - CRUD completo de usuários
@@ -92,3 +91,7 @@ docker run -p 3000:3000 product-api
 ###
 
 A API estará acessível em: http://localhost:3000
+
+## Frontend
+Para acessar o repositório do frontend, entre no link abaixo.
+👉 Acesse aqui: [Repositório Frontend](https://github.com/MarceloTadini/scoders-front)

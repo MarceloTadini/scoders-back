@@ -1,20 +1,8 @@
-import {
-    Controller,
-    Get,
-    Param,
-    Put,
-    Body,
-    Delete,
-    UseGuards,
-    UseInterceptors,
-    UsePipes,
-    Query,
-} from '@nestjs/common';
+import { Controller, Get, Param, Put, Body, Delete, UseGuards, UseInterceptors, Query } from '@nestjs/common';
 import { UserService } from '../services/user.service';
 import { AuthGuard } from '../../shared/guards/auth.guard';
 import { LoggingInterceptor } from '../../shared/interceptors/logging.interceptor';
-import { ZodValidationPipe } from '../../shared/pipe/zod-validation.pipe';
-import { UpdateUserDto, updateUserSchema } from '../dto/update-user.dto';
+import { UpdateUserDto } from '../dto/update-user.dto';
 
 @UseInterceptors(LoggingInterceptor)
 @UseGuards(AuthGuard)
@@ -36,7 +24,7 @@ export class UserController {
     @Put(':userId')
     async updateUser(
         @Param('userId') userId: string,
-        @Body() updateData: UpdateUserDto, // use o tipo correto
+        @Body() updateData: UpdateUserDto, 
     ) {
         console.log('Payload recebido:', updateData);
         return this.userService.updateUser(userId, updateData);

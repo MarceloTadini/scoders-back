@@ -7,9 +7,6 @@ import { UserModule } from './user/user.module';
 import { ProductModule } from './product/product.module';
 import { CacheModule } from '@nestjs/cache-manager';
 import { redisStore } from 'cache-manager-redis-yet';
-import { APP_INTERCEPTOR, APP_FILTER } from '@nestjs/core';
-import { LoggingInterceptor } from './shared/interceptors/logging.interceptor';
-import { HttpExceptionFilter } from './shared/filters/http-exception.filter';
 
 @Module({
   imports: [
@@ -59,12 +56,6 @@ import { HttpExceptionFilter } from './shared/filters/http-exception.filter';
     UserModule,
     AuthModule,
     ProductModule,
-  ],
-  providers: [
-    {
-      provide: APP_INTERCEPTOR,
-      useClass: LoggingInterceptor,
-    }
-  ],
+  ]
 })
 export class AppModule {}

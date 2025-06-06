@@ -1,21 +1,12 @@
 import { BadRequestException, Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards, UseInterceptors, UsePipes } from "@nestjs/common";
-import { z } from "zod";
 import { ZodValidationPipe } from "../../shared/pipe/zod-validation.pipe";
 import { LoggingInterceptor } from "../../shared/interceptors/logging.interceptor";
-import { ApiBearerAuth, ApiBody, ApiQuery, ApiResponse } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiBody, ApiParam, ApiQuery, ApiResponse } from "@nestjs/swagger";
 import { AuthGuard } from "../../shared/guards/auth.guard";
-import { ProductDto } from '../dto/product.dto';
-import { UpdateProductDto } from '../dto/update-product.dto';
 import { ProductService } from "../services/product.service";
+import { CreateProduct, createProductSchema } from "../dto/product.dto";
+import { ProductDto, UpdateProductDto } from "../dto/swagger.dto";
 
-const createProductSchema = z.object({
-    name: z.string(),
-    category: z.string(),
-    description: z.string(),
-    imageUrl: z.string().optional(),
-});
-
-type CreateProduct = z.infer<typeof createProductSchema>;
 
 @UseInterceptors(LoggingInterceptor)
 @Controller('product')
@@ -27,13 +18,13 @@ export class ProductController{
     @Get('search')
     @ApiQuery({
         name: 'keyword',
-        description: 'Palavra-chave usada para buscar products pelo título ou conteúdo.',
+        description: 'Palavra-chave usada para buscar produtos pelo nome ou categoria.',
         required: true,
         example: 'Productagem'
     })
     @ApiResponse({
         status: 200,
-        description: 'A productagem foi encontrada com sucesso.',
+        description: 'O produto foi encontrado com sucesso.',
         type: ProductDto
     })
     @ApiResponse({
@@ -66,15 +57,14 @@ export class ProductController{
     }
 
     @Get(':productId')
-    @ApiQuery({
+    @ApiParam({
         name: 'productId',
-        description: 'ID de uma productagem.',
+        description: 'ID de um produto.',
         required: true,
-        example: '67886b8d920149a1874cf70'
     })
     @ApiResponse({
         status: 200,
-        description: 'A productagem foi encontrada com sucesso.',
+        description: 'O produto foi encontrado com sucesso.',
         type: ProductDto
     })
     async getProductById(@Param('productId' )productId: string) {
@@ -86,12 +76,12 @@ export class ProductController{
     @UsePipes(new ZodValidationPipe(createProductSchema))
     @Post()
     @ApiBody({
-        description: 'Dados para criar um novo product.',
+        description: 'Dados para criar um novo produto.',
         type: ProductDto,
       })
     @ApiResponse({
         status: 201,
-        description: 'A productagem foi criada com sucesso.',
+        description: 'O produto foi criado com sucesso.',
     })
     async createProduct(@Body() {name, category, description, imageUrl}) {
         return this.productService.createProduct({name, category,description, imageUrl});
@@ -101,12 +91,12 @@ export class ProductController{
     @UseGuards(AuthGuard)
     @Put(':productId')
     @ApiBody({
-        description: 'Productagem de exemplo para ser editado.',
+        description: 'Produto de exemplo para ser editado.',
         type: UpdateProductDto,
     })
     @ApiResponse({
         status: 200,
-        description: 'A productagem foi editada com sucesso.'
+        description: 'O produto foi editado com sucesso.'
     })
     @ApiResponse({
         status: 400,
@@ -128,7 +118,7 @@ export class ProductController{
     @Delete(':productId')
     @ApiResponse({
         status: 200,
-        description: 'A productagem foi deletada com sucesso.'
+        description: 'O produto foi deletado com sucesso.'
     })
     @ApiResponse({
         status: 401,

@@ -8,16 +8,17 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalFilters(new HttpExceptionFilter());
 
-  // Habilitar o CORS para aceitar qualquer origem e permitir o cabeçalho Authorization (Bearer Token)
+
   app.enableCors({
-    origin: true,  // Permite qualquer origem (pode ser qualquer domínio)
-    methods: 'GET, POST, PUT, DELETE, PATCH', // Permite os métodos HTTP necessários
-    allowedHeaders: 'Content-Type, Authorization', // Permite os cabeçalhos necessários, incluindo o Authorization
+    origin: true,  
+    methods: 'GET, POST, PUT, DELETE, PATCH',
+    allowedHeaders: 'Content-Type, Authorization', 
   });
 
   const config = new DocumentBuilder()
-    .setTitle('Blog API')
-    .setDescription('API de Blogging')
+    .setTitle('API de Produtos SCODERS')
+    .setDescription('API de produtos com sistemas de autenticação, cache e websocket.')
+    .setContact('Marcelo Tadini', 'https://github.com/MarceloTadini', 'tadini.marcelo53@gmail.com')
     .setVersion('1.0')
     .addBearerAuth()
     .build();

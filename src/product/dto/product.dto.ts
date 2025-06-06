@@ -1,18 +1,10 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { z } from "zod";
 
-export class ProductDto {
-  @ApiProperty({ example: 'Meu primeiro product', description: 'Título da productagem.' })
-  title: string;
+export const createProductSchema = z.object({
+    name: z.string(),
+    category: z.string(),
+    description: z.string(),
+    imageUrl: z.string().optional(),
+});
 
-  @ApiProperty({ example: 'Uma introdução breve sobre o conteúdo.', description: 'Uma introdução da productagem.' })
-  intro: string;
-
-  @ApiProperty({ example: 'Aqui está o conteúdo detalhado do meu product.', description: 'O conteúdo completo da productagem.' })
-  content: string;
-
-  @ApiProperty({ example: 'https://meusite.com/imagem.png', description: 'URL de uma imagem relacionada.', required: false })
-  imageUrl?: string;
-
-  @ApiProperty({ example: 'https://meusite.com/video.mp4', description: 'URL de um vídeo relacionado.', required: false })
-  videoUrl?: string;
-}
+export type CreateProduct = z.infer<typeof createProductSchema>;

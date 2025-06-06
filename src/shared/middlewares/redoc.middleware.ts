@@ -2,7 +2,7 @@ import redoc from 'redoc-express';
 
 export function setupRedoc(app: any) {
   const redocOptions = {
-    title: 'Blog API',
+    title: 'API de Produtos SCODERS',
     version: '1.0',
     specUrl: '/api-json',
   };

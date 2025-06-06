@@ -151,7 +151,7 @@ export class ProductService {
   private async clearProductsCache() {
     try {
       // Limpar cache de listagem (aproximação - idealmente usar padrão de chaves)
-      const keys = ['products:limit:10:page:1', 'products:limit:20:page:1']; // Ajuste conforme necessário
+      const keys = ['products:limit:10:page:1', 'products:limit:20:page:1', 'products:limit:undefined:page:undefined']; // Ajuste conforme necessário
       for (const key of keys) {
         await this.cacheManager.del(key);
       }

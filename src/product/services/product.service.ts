@@ -114,7 +114,8 @@ export class ProductService {
       // Limpar cache
       await this.cacheManager.del(`product:${productId}`);
       await this.clearProductsCache();
-      
+
+      this.productGateway.emitProductDelete(productId);
       this.logger.log(`🗑️ Produto deletado: ${productId}`);
       return result;
     } catch (error) {

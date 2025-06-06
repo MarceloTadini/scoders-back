@@ -55,4 +55,14 @@ export class ProductGateway implements OnGatewayConnection, OnGatewayDisconnect 
       message: '📡 Produto atualizado via WebSocket:!',
     });
   }
+
+  emitProductDelete(productId: string) {
+    this.server.emit('productDeleted', {
+      productId,
+      timestamp: new Date().toISOString(),
+      message: 'Produto deletado via WebSocket!',
+    });
+    
+    this.logger.log(`📡 Produto deletado via WebSocket: ${productId}`);
+  }
 }

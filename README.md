@@ -82,9 +82,9 @@ cd scoders-back
 ### 3. Adicione o arquivo .env na raíz do projeto com as seguintes variáveis
 ```bash
 PORT=3000
-MONGO_URI=mongodb+srv://admin:P6k2jbcUjDaj806q@posts-api.dwkaw.mongodb.net/?retryWrites=true&w=majority&appName=posts-api
-API_SECRET=batman
-REDIS_URL=redis://default:M5XMhhh1QXlgXPsJs8Dp16DdfIc7CjoE@redis-13082.c321.us-east-1-2.ec2.redns.redis-cloud.com:13082
+MONGO_URI=sua url do MongoDB Atlas
+API_SECRET=sua secret
+REDIS_URL=adicione sua url do REDIS CLOUD
 ```
 
 ### 2. Construa a imagem:
